@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World SWA</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+        #message { margin-top: 20px; font-size: 24px; color: #0078d4; }
+    </style>
+</head>
+<body>
+    <h1>Azure Static Web Apps + Python</h1>
+    <p>Click the button to fetch a message from the Python backend.</p>
+    <button onclick="fetchMessage()">Get Message</button>
+    <p id="message"></p>
+
+    <script>
+        async function fetchMessage() {
+            const messageElement = document.getElementById('message');
+            messageElement.textContent = 'Loading...';
+            try {
+                const response = await fetch('/api/message');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const text = await response.text();
+                messageElement.textContent = text;
+            } catch (error) {
+                messageElement.textContent = 'Error fetching message. Make sure the API is running.';
+                console.error('Fetch error:', error);
+            }
+        }
+    </script>
+</body>
+</html>
